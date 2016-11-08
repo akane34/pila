@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import OperadorServicio, Aportante, Pensionado, Novedad
+from . import models
 
 
 # Create your views here.
@@ -51,9 +51,9 @@ def crear_consultar_aportante(request):
             grupo = Group.objects.get(name__iexact="APORTANTE")
             grupo.user_set.add(usuario)
 
-            operador_servicio = OperadorServicio.objects.get(pk=1)
+            operador_servicio = models.OperadorServicio.objects.get(pk=1)
 
-            aportante = Aportante()
+            aportante = models.Aportante()
             aportante.usuario_id = usuario
             aportante.nombre = nombre
             aportante.tipo_pagador_pensiones = tipo_pagador_pensiones
@@ -62,11 +62,11 @@ def crear_consultar_aportante(request):
 
             return HttpResponse(serializers.serialize("json", [aportante]))
         elif request.method == 'GET':
-            aportantes = Aportante.objects.all().values('pk', 'usuario_id', 'nombre', 'tipo_pagador_pensiones',
-                                                        'operador_servicio')
+            aportantes = models.Aportante.objects.all().values('pk', 'usuario_id', 'nombre', 'tipo_pagador_pensiones',
+                                                               'operador_servicio')
 
             for aportante in aportantes:
-                a = Aportante.objects.get(pk=aportante['pk'])
+                a = models.Aportante.objects.get(pk=aportante['pk'])
                 aportante['tipo_pagador_pensiones_nombre'] = a.get_tipo_pagador_pensiones_display()
 
             aportantes = json.loads(json.dumps(list(aportantes)))
@@ -83,7 +83,7 @@ def actualizar_eliminar_aportante(request, id):
         if request.method == 'PUT':
             data = json.loads(request.body)
 
-            aportante = Aportante.objects.get(pk=id)
+            aportante = models.Aportante.objects.get(pk=id)
             usuario = User.objects.get(pk=aportante.usuario_id.id)
 
             if data['password']:
@@ -100,14 +100,14 @@ def actualizar_eliminar_aportante(request, id):
 
             return HttpResponse(serializers.serialize("json", [aportante]))
         elif request.method == 'DELETE':
-            aportante = Aportante.objects.get(pk=id)
+            aportante = models.Aportante.objects.get(pk=id)
             usuario = User.objects.get(pk=aportante.usuario_id.id)
             aportante.delete()
             usuario.delete()
 
             return JsonResponse({"mensaje": "ok"})
         elif request.method == 'GET':
-            aportante = Aportante.objects.get(pk=id)
+            aportante = models.Aportante.objects.get(pk=id)
             respuesta = {
                 'pk': aportante.pk,
                 'usuario_id': aportante.usuario_id.id,
@@ -130,9 +130,9 @@ def crear_pensionado(request):
         if request.method == 'POST':
             data = json.loads(request.body)
 
-            aportante = Aportante.objects.get(pk=data['aportante'])
+            aportante = models.Aportante.objects.get(pk=data['aportante'])
 
-            pensionado = Pensionado()
+            pensionado = models.Pensionado()
             pensionado.nombre = data['nombre']
             pensionado.edad = data['edad']
             pensionado.salario = data['salario']
@@ -158,15 +158,16 @@ def consultar_pensionados(request, id):
     try:
         if request.method == 'GET':
             respuesta = []
-            pensionados = Pensionado.objects.filter(aportante_id=id)
+            pensionados = models.Pensionado.objects.filter(aportante_id=id)
 
             for pensionado in pensionados:
-                novedades = Novedad.objects.filter(pensionado_id=pensionado.pk).values('pk', 'fecha_inicio',
-                                                                                       'fecha_fin',
-                                                                                       'duracion', 'tipo_novedad')
+                novedades = models.Novedad.objects.filter(pensionado_id=pensionado.pk).values('pk', 'fecha_inicio',
+                                                                                              'fecha_fin',
+                                                                                              'duracion',
+                                                                                              'tipo_novedad')
 
                 for novedad in novedades:
-                    n = Novedad.objects.get(pk=novedad['pk'])
+                    n = models.Novedad.objects.get(pk=novedad['pk'])
                     novedad['fecha_inicio'] = str(n.fecha_inicio)
                     novedad['fecha_fin'] = str(n.fecha_fin)
                     novedad['tipo_novedad_nombre'] = n.get_tipo_novedad_display()
@@ -202,7 +203,7 @@ def actualizar_eliminar_pensionado(request, id):
         if request.method == 'PUT':
             data = json.loads(request.body)
 
-            pensionado = Pensionado.objects.get(pk=id)
+            pensionado = models.Pensionado.objects.get(pk=id)
 
             if data['nombre']:
                 pensionado.nombre = data['nombre']
@@ -241,18 +242,19 @@ def actualizar_eliminar_pensionado(request, id):
 
             return HttpResponse(serializers.serialize("json", [pensionado]))
         elif request.method == 'DELETE':
-            pensionado = Pensionado.objects.get(pk=id)
+            pensionado = models.Pensionado.objects.get(pk=id)
 
             pensionado.delete()
 
             return JsonResponse({"mensaje": "ok"})
         elif request.method == 'GET':
-            pensionado = Pensionado.objects.get(pk=id)
-            novedades = Novedad.objects.filter(pensionado_id=pensionado.pk).values('pk', 'fecha_inicio', 'fecha_fin',
-                                                                                   'duracion', 'tipo_novedad')
+            pensionado = models.Pensionado.objects.get(pk=id)
+            novedades = models.Novedad.objects.filter(pensionado_id=pensionado.pk).values('pk', 'fecha_inicio',
+                                                                                          'fecha_fin',
+                                                                                          'duracion', 'tipo_novedad')
 
             for novedad in novedades:
-                n = Novedad.objects.get(pk=novedad['pk'])
+                n = models.Novedad.objects.get(pk=novedad['pk'])
                 novedad['fecha_inicio'] = str(n.fecha_inicio)
                 novedad['fecha_fin'] = str(n.fecha_fin)
                 novedad['tipo_novedad_nombre'] = n.get_tipo_novedad_display()
@@ -288,10 +290,10 @@ def crear_novedad(request, id_aportante, id_pensionado):
         if request.method == 'POST':
             data = json.loads(request.body)
 
-            aportante = Aportante.objects.get(pk=id_aportante)
-            pensionado = Pensionado.objects.get(pk=id_pensionado)
+            aportante = models.Aportante.objects.get(pk=id_aportante)
+            pensionado = models.Pensionado.objects.get(pk=id_pensionado)
 
-            novedad = Novedad()
+            novedad = models.Novedad()
             novedad.fecha_inicio = datetime.strptime(data['fechaInicio'], "%d/%m/%Y")
             novedad.fecha_fin = datetime.strptime(data['fechaFin'], "%d/%m/%Y")
             novedad.duracion = data['duracion']
@@ -312,7 +314,7 @@ def actualizar_eliminar_novedad(request, id_aportante, id_pensionado, id):
         if request.method == 'PUT':
             data = json.loads(request.body)
 
-            novedad = Novedad.objects.get(pk=id)
+            novedad = models.Novedad.objects.get(pk=id)
 
             if data['fechaInicio']:
                 novedad.fecha_inicio = data['fechaInicio']
@@ -330,7 +332,7 @@ def actualizar_eliminar_novedad(request, id_aportante, id_pensionado, id):
 
             return HttpResponse(serializers.serialize("json", [novedad]))
         elif request.method == 'DELETE':
-            novedad = Novedad.objects.get(pk=id)
+            novedad = models.Novedad.objects.get(pk=id)
 
             novedad.delete()
 
@@ -353,13 +355,38 @@ def consultar_tipo_usuario(request, id):
 
             if len(grupos) == 1:
                 if str(grupos[0]).upper() == "APORTANTE":
-                    aportante = Aportante.objects.get(usuario_id=usuario.pk)
+                    aportante = models.Aportante.objects.get(usuario_id=usuario.pk)
                     respuesta['id_aportante'] = aportante.pk
                 elif str(grupos[0]).upper() == "OPERADOR":
-                    operador_servicio = OperadorServicio.objects.get(pk=usuario.pk)
+                    operador_servicio = models.OperadorServicio.objects.get(pk=usuario.pk)
                     respuesta['id_operador_servicio'] = operador_servicio.pk
 
             return JsonResponse(respuesta, safe=False)
     except:
         traceback.print_exc()
         return JsonResponse({"mensaje": "Ocurrió un error consultando el tipo del usuario " + str(id)})
+
+
+@csrf_exempt
+def calcular_pago_servicio(request, id_aportante, id_pensionado, id_servicio):
+    valor_a_pagar = 0
+    try:
+        if request.method == 'POST':
+            servicio = models.Servicio.objects.get(pk=id_servicio)
+            pensionado = models.Pensionado.objects.get(pk=id_pensionado)
+
+            if servicio.pk == 1:
+                valor_a_pagar = servicio.calcular_pago_aporte_pension(pensionado)
+            elif servicio.pk == 2:
+                valor_a_pagar = servicio.calcular_pago_aporte_salud(pensionado)
+            elif servicio.pk == 3:
+                valor_a_pagar = servicio.calcular_pago_aporte_riesgos_laborales(pensionado)
+
+        respuesta = {
+            'valor_a_pagar': valor_a_pagar
+        }
+
+        return JsonResponse(respuesta, safe=False)
+    except:
+        traceback.print_exc()
+        return JsonResponse({"mensaje": "Ocurrio un error calculando el pago del servicio"})

@@ -68,7 +68,82 @@ class Novedad(models.Model):
     duracion = models.IntegerField()
     tipo_novedad = models.IntegerField(choices=TIPO_NOVEDAD)
     aportante = models.ForeignKey(Aportante)
-    pensionado = models.OneToOneField(Pensionado)
+    pensionado = models.ForeignKey(Pensionado)
+
+
+class Servicio(models.Model):
+    nombre = models.CharField(max_length=250)
+    operador_servicio = models.ForeignKey(OperadorServicio)
+
+    @staticmethod
+    def calcular_pago_aporte_pension(pensionado):
+        novedades = Novedad.objects.filter(pensionado_id=pensionado.pk).order_by('pk')
+        ultima_novedad = None
+
+        if len(novedades) > 0:
+            ultima_novedad = novedades.reverse()[0]
+
+        if len(novedades) == 0:
+            return pensionado.salario * 0.16
+        elif ultima_novedad is not None and (
+                            ultima_novedad.tipo_novedad == 3 or
+                            ultima_novedad.tipo_novedad == 4 or
+                        ultima_novedad.tipo_novedad == 5):
+            if ultima_novedad.duracion > 7:
+                return pensionado.salario * 0.16
+            elif 3 < ultima_novedad.duracion <= 7:
+                return pensionado.salario * 0.12
+            elif 0 < ultima_novedad.duracion <= 3:
+                return 0
+        elif pensionado.es_alto_riesgo:
+            return pensionado.salario * 0.26
+        elif pensionado.es_congresista:
+            return pensionado.salario * 0.255
+        elif pensionado.es_trabajador_CTI:
+            return pensionado.salario * 0.35
+        elif pensionado.es_aviador:
+            return pensionado.salario * 0.21
+
+    @staticmethod
+    def calcular_pago_aporte_salud(pensionado):
+        novedades = Novedad.objects.filter(pensionado_id=pensionado.pk).order_by('pk')
+        ultima_novedad = None
+
+        if len(novedades) > 0:
+            ultima_novedad = novedades.reverse()[0]
+
+        if pensionado.residencia_exterior == 'S' or pensionado.tiene_grupo_familiar_colombia == 'S':
+            return 0
+        elif len(novedades) == 0:
+            return pensionado.salario * 0.12
+        else:
+            if ultima_novedad is not None and (
+                                ultima_novedad.tipo_novedad == 3 or
+                                ultima_novedad.tipo_novedad == 4 or
+                            ultima_novedad.tipo_novedad == 5):
+                if 0 <= ultima_novedad.duracion <= 3:
+                    return 0
+                elif 3 < ultima_novedad.duracion <= 7:
+                    return pensionado.salario * 0.12
+                elif ultima_novedad.duracion > 7:
+                    return pensionado.salario * 0.16
+
+    @staticmethod
+    def calcular_pago_aporte_riesgos_laborales(pensionado):
+        if 8022 <= pensionado.codigo_CIU <= 8513:
+            return pensionado.salario * 0.00522
+
+        if 0117 <= pensionado.codigo_CIU <= 1541:
+            return pensionado.salario * 0.01044
+
+        if 1592 <= pensionado.codigo_CIU <= 1743:
+            return pensionado.salario * 0.02436
+
+        if 2101 <= pensionado.codigo_CIU <= 2322:
+            return pensionado.salario * 0.04350
+
+        if 1431 <= pensionado.codigo_CIU <= 2321:
+            return pensionado.salario * 0.06960
 
 
 class Pago(models.Model):
@@ -77,4 +152,4 @@ class Pago(models.Model):
     valor_riesgos = models.FloatField()
     valor_total = models.FloatField()
     aportante = models.ForeignKey(Aportante)
-    beneficiario = models.OneToOneField(Pensionado)
+    beneficiario = models.ForeignKey(Pensionado)
