@@ -129,7 +129,7 @@
 				'</tr>' +
 				'<tr>' +
 				'<td>Salario:</td>' +
-				'<td>' + d.salario + '</td>' +
+				'<td>' + '$ ' + nf.format(d.salario) + '</td>' +
 				'</tr>' +
 				'<tr>' +
 				'<td>¿Es alto riesgo?:</td>' +

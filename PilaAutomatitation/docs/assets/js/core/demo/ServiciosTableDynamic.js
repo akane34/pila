@@ -59,9 +59,13 @@
 	};
 
 	p._createDataTable2 = function() {
+		loadCredentials();
 		var table = $('#datatable2').DataTable({
 			"dom": 'T<"clear">lfrtip',
-			"ajax": $('#datatable2').data('source'),
+			"ajax": {
+				url: URL_HOME + '/aportantes/' + USER.idAportante + '/pensionados',
+				dataSrc: ''
+			},
 			"columns": [
 				{
 					"class": 'details-control',
@@ -69,10 +73,10 @@
 					"data": null,
 					"defaultContent": ''
 				},
-				{"data": "id"},
+				{"data": "pk"},
 				{"data": "nombre"},
 				{"data": "edad"},
-				{"data": "codigoCIU"}
+				{"data": "codigo_CIU"}
 			],
 			"tableTools": {
 				"sSwfPath": $('#datatable2').data('swftools')
@@ -116,7 +120,7 @@
 		return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 				'<tr>' +
 				'<td>Pagar Aportes:</td>' +
-				'<td><a href="pagar.html?id=' + d.id + '" style="font-weight: bold; color: #7eb73d;">Pagar</a></td>' +
+				'<td><a href="pagar.html?idP=' + d.pk + '" style="font-weight: bold; color: #7eb73d;">Pagar</a></td>' +
 				'</tr>' +
 				'</table>';
 	};

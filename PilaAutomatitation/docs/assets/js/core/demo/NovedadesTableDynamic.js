@@ -121,7 +121,7 @@
 		var novedades = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
 			'<tr>' +
 			'<td></td>' +
-			'<td><a href="crear-novedad.html?id=' + d.pk + '" style="font-weight: bold; color: #7eb73d;">Crear</a></td>' +
+			'<td><a href="crear-novedad.html?idP=' + d.pk + '" style="font-weight: bold; color: #7eb73d;">Crear</a></td>' +
 			'</tr>';
 
 		if (d.novedades){
@@ -144,11 +144,11 @@
 				'</tr>' +
 				'<tr>' +
 				'<td>Tipo:</td>' +
-				'<td>' + d.novedades[i].tipo + '</td>' +
+				'<td>' + d.novedades[i].tipo_novedad_nombre + '</td>' +
 				'</tr>' +
 				'<tr>' +
 				'<td>Acciones:</td>' +
-				'<td><a href="actualizar-novedad.html?id=' + d.novedades[i].pk + '" style="font-weight: bold; color: #7eb73d;">Actualizar</a>  <a href="#" onclick="eliminarNovedad(' + d.novedades[i].pk + ')" style="font-weight: bold; color: #6c0020;">Eliminar</a></td>' +
+				'<td><a href="actualizar-novedad.html?idP=' + d.pk + '&id=' + d.novedades[i].pk + '" style="font-weight: bold; color: #7eb73d;">Actualizar</a>  <a href="#" onclick="eliminarNovedad(' + d.pk + ',' + d.novedades[i].pk + ')" style="font-weight: bold; color: #6c0020;">Eliminar</a></td>' +
 				'</tr>' +
 				'<tr><td>------------------</td></tr>';
 			}

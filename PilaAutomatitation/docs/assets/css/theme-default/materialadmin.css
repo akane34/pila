@@ -2802,7 +2802,7 @@ textarea.autosize {
   left: 0;
 }
 .floating-label .form-control ~ label {
-  top: 19px;
+  top: -5px;
   font-size: 16px;
 }
 .floating-label .form-control:focus ~ label,

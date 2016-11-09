@@ -159,17 +159,23 @@
 													</div><!--end #step1 -->
 													<div class="tab-pane" id="step2">
 														<br/><br/>
-
+														<div class="row">
+															<div class="col-sm-12">
+																<div class="form-group">
+																	<h3 id="step2Message"></h3>
+																</div>
+															</div>
+														</div>
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<input type="number" name="valorSalud" id="valorSalud" class="form-control" required readonly>
+																	<input type="text" name="valorSalud" id="valorSalud" class="form-control" value="0" required readonly>
 																	<label for="valorSalud" class="control-label">Valor a pagar al sistema General de Seguridad Social en Salud</label>
 																</div>
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<button type="submit" class="btn btn-raised btn-default-light ink-reaction">Calcular</button>
+																	<a href="#" class="btn btn-raised btn-default-light ink-reaction" onclick="pagarServicio(2)">Calcular</a>
 																</div>
 															</div>
 														</div>
@@ -177,13 +183,13 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<input type="number" name="valorPension" id="valorPension" class="form-control" required readonly>
+																	<input type="text" name="valorPension" id="valorPension" class="form-control" value="0" required readonly>
 																	<label for="valorPension" class="control-label">Valor a pagar al sistema General de Pensiones</label>
 																</div>
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<button type="submit" class="btn btn-raised btn-default-light ink-reaction">Calcular</button>
+																	<a href="#" type="submit" class="btn btn-raised btn-default-light ink-reaction" onclick="pagarServicio(1)">Calcular</a>
 																</div>
 															</div>
 														</div>
@@ -191,13 +197,13 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<input type="number" name="valorRiesgos" id="valorRiesgos" class="form-control" required readonly>
+																	<input type="text" name="valorRiesgos" id="valorRiesgos" class="form-control" value="0" required readonly>
 																	<label for="valorRiesgos" class="control-label">Valor a pagar al sistema General de Riesgos Laborales</label>
 																</div>
 															</div>
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<button type="submit" class="btn btn-raised btn-default-light ink-reaction">Calcular</button>
+																	<a href="#" type="submit" class="btn btn-raised btn-default-light ink-reaction" onclick="pagarServicio(3)">Calcular</a>
 																</div>
 															</div>
 														</div>
@@ -207,7 +213,7 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<input type="number" name="valorTotal" id="valorTotal" class="form-control" required readonly>
+																	<input type="text" name="valorTotal" id="valorTotal" class="form-control" required readonly>
 																	<label for="valorTotal" class="control-label">Valor total a pagar</label>
 																</div>
 															</div>
@@ -274,8 +280,8 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<input type="number" name="valorSaludR" id="valorSaludR" class="form-control" required readonly>
-																	<label for="valorSaludR" class="control-label">Valor a pagado al sistema General de Seguridad Social en Salud</label>
+																	<input type="text" name="valorSaludR" id="valorSaludR" class="form-control" required readonly>
+																	<label for="valorSaludR" class="control-label">Valor pagado al sistema General de Seguridad Social en Salud</label>
 																</div>
 															</div>
 														</div>
@@ -283,8 +289,8 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<input type="number" name="valorPensionR" id="valorPensionR" class="form-control" required readonly>
-																	<label for="valorPensionR" class="control-label">Valor a pagado al sistema General de Pensiones</label>
+																	<input type="text" name="valorPensionR" id="valorPensionR" class="form-control" required readonly>
+																	<label for="valorPensionR" class="control-label">Valor pagado al sistema General de Pensiones</label>
 																</div>
 															</div>
 														</div>
@@ -292,8 +298,8 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<input type="number" name="valorRiesgosR" id="valorRiesgosR" class="form-control" required readonly>
-																	<label for="valorRiesgosR" class="control-label">Valor a pagado al sistema General de Riesgos Laborales</label>
+																	<input type="text" name="valorRiesgosR" id="valorRiesgosR" class="form-control" required readonly>
+																	<label for="valorRiesgosR" class="control-label">Valor pagado al sistema General de Riesgos Laborales</label>
 																</div>
 															</div>
 														</div>
@@ -301,7 +307,7 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<input type="number" name="valorTotalR" id="valorTotalR" class="form-control" required readonly>
+																	<input type="text" name="valorTotalR" id="valorTotalR" class="form-control" required readonly>
 																	<label for="valorTotalR" class="control-label">Valor total pagado</label>
 																</div>
 															</div>
@@ -310,7 +316,7 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<button type="submit" class="btn btn-raised btn-default-light ink-reaction">Finalizar</button>
+																	<a href="pagar-servicios.html" type="submit" class="btn btn-raised btn-default-light ink-reaction">Finalizar</a>
 																</div>
 															</div>
 														</div>
@@ -319,7 +325,7 @@
 												</div><!--end .tab-content -->
 												<ul class="pager wizard">
 													<li class="previous"><a class="btn-raised" href="javascript:void(0);">Anterior</a></li>
-													<li class="next"><a class="btn-raised" href="javascript:void(0);">Siguiente</a></li>
+													<li class="next"><a class="btn-raised" href="javascript:void(0);" onclick="calcularTotal()">Siguiente</a></li>
 												</ul>
 											</form>
 										</div><!--end #rootwizard -->
@@ -464,6 +470,8 @@
 		<script src="../../assets/js/app/util/util.js"></script>
 		<script src="../../assets/js/app/services/index.js"></script>
 		<script src="../../assets/js/app/services/login.js"></script>
+		<script src="../../assets/js/app/services/cargar-pensionado-pago.js"></script>
+		<script src="../../assets/js/app/services/pagarServicio.js"></script>
 		<!-- END JAVASCRIPT -->
 
 	</body>

@@ -1,8 +1,11 @@
 function crearNovedad() {
-    var idPensionado = getUrlParameter('id');
+    var idPensionado = getUrlParameter('idP');
+    var fechaInicioDate = new Date($('#fechaInicio').val());
+    var fechaFinDate = new Date($('#fechaFin').val());
+
     var data = {
-        fechaInicio: $('#fechaInicio').val(),
-        fechaFin: $('#fechaFin').val(),
+        fechaInicio: fechaInicioDate.getDate() + '/' + (fechaInicioDate.getMonth() + 1) + '/' +  fechaInicioDate.getFullYear(),
+        fechaFin: fechaFinDate.getDate() + '/' + (fechaFinDate.getMonth() + 1) + '/' +  fechaFinDate.getFullYear(),
         duracion: parseInt($('#duracion').val()),
         tipo: parseInt($('#tipo option:selected').val())
     };
@@ -18,15 +21,19 @@ function crearNovedad() {
 }
 
 function actualizarNovedad() {
-    var id = getUrlParameter('id');
+    var idPensionado = getUrlParameter('idP');
+    var idNovedad = getUrlParameter('id');
+    var fechaInicioDate = new Date($('#fechaInicio').val());
+    var fechaFinDate = new Date($('#fechaFin').val());
+
     var data = {
-        fechaInicio: $('#fechaInicio').val(),
-        fechaFin: $('#fechaFin').val(),
+        fechaInicio: fechaInicioDate.getDate() + '/' + (fechaInicioDate.getMonth() + 1) + '/' +  fechaInicioDate.getFullYear(),
+        fechaFin: fechaFinDate.getDate() + '/' + (fechaFinDate.getMonth() + 1) + '/' +  fechaFinDate.getFullYear(),
         duracion: parseInt($('#duracion').val()),
         tipo: parseInt($('#tipo option:selected').val())
     };
 
-    PUT('/aportantes/' + USER.idAportante + '/pensionados/' + idPensionado + '/novedades/' + id + '/', JSON.stringify(data), function (response) {
+    PUT('/aportantes/' + USER.idAportante + '/pensionados/' + idPensionado + '/novedades/' + idNovedad + '/', JSON.stringify(data), function (response) {
         if (response.mensaje){
             $('#message').html(response.mensaje);
         }
@@ -36,7 +43,7 @@ function actualizarNovedad() {
     });
 }
 
-function eliminarNovedad(id) {
+function eliminarNovedad(idPensionado, id) {
     DELETE('/aportantes/' + USER.idAportante + '/pensionados/' + idPensionado + '/novedades/' + id + '/', function (response) {
         if (response.mensaje){
             $('#message').html(response.mensaje);

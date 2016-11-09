@@ -11,7 +11,7 @@ function isServiceOperatorAuthenticated() {
     else{
         window.location.href = "../../index.html";
     }
-}
+};
 
 function isContributorAuthenticated() {
     loadCredentials();
@@ -23,6 +23,13 @@ function isContributorAuthenticated() {
     else{
         window.location.href = "../../index.html";
     }
-}
+};
+
+var nf = new Intl.NumberFormat('es-CO', {
+  style: 'currency',
+  currency: 'COP',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
 
 

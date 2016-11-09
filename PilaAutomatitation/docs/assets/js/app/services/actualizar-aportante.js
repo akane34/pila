@@ -4,6 +4,6 @@ $(window).load(function () {
     GET('/aportantes/' + id + '/', function (response) {
         $('#nombre').val(response.nombre);
         $('#usuario').val(response.usuario);
-        $('#tipoPagador option:selected').val(response.tipo_pagador_pensiones);
+        $('#tipoPagador > option[value="' + response.tipo_pagador_pensiones + '"]').attr('selected', 'selected');
     });
 });
