@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Planilla Integrada de Liquidación de Aportes (PILA)</title>
+
+		<!-- BEGIN META -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="keywords" content="your,keywords">
+		<meta name="description" content="Short explanation about this website">
+		<!-- END META -->
+
+		<!-- BEGIN STYLESHEETS -->
+		<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
+		<link type="text/css" rel="stylesheet" href="../../assets/css/theme-default/bootstrap.css?1422792965" />
+		<link type="text/css" rel="stylesheet" href="../../assets/css/theme-default/materialadmin.css?1425466319" />
+		<link type="text/css" rel="stylesheet" href="../../assets/css/theme-default/font-awesome.min.css?1422529194" />
+		<link type="text/css" rel="stylesheet" href="../../assets/css/theme-default/material-design-iconic-font.min.css?1421434286" />
+		<link type="text/css" rel="stylesheet" href="../../assets/css/theme-default/libs/DataTables/jquery.dataTables.css?1423553989" />
+		<link type="text/css" rel="stylesheet" href="../../assets/css/theme-default/libs/DataTables/extensions/dataTables.colVis.css?1423553990" />
+		<link type="text/css" rel="stylesheet" href="../../assets/css/theme-default/libs/DataTables/extensions/dataTables.tableTools.css?1423553990" />
+		<link type="text/css" rel="stylesheet" href="../../assets/css/theme-default/libs/wizard/wizard.css?1425466601" />
+		<!-- END STYLESHEETS -->
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="../../assets/js/libs/utils/html5shiv.js?1403934957"></script>
+		<script type="text/javascript" src="../../assets/js/libs/utils/respond.min.js?1403934956"></script>
+		<![endif]-->
+	</head>
+	<body class="menubar-hoverable header-fixed" onload="isContributorAuthenticated()">
+
+		<!-- BEGIN HEADER-->
+		<header id="header" >
+			<div class="headerbar">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="headerbar-left">
+					<ul class="header-nav header-nav-options">
+						<li class="header-nav-brand" >
+							<div class="brand-holder">
+								<a href="../../../../html/dashboards/dashboard.html">
+									<span class="text-lg text-bold text-primary">Planilla Integrada de Liquidación de Aportes (PILA)</span>
+								</a>
+							</div>
+						</li>
+						<li>
+							<a class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+								<i class="fa fa-bars"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="headerbar-right">
+					<ul class="header-nav header-nav-options">
+						<li>
+							<!-- Search form -->
+							<form class="navbar-search" role="search">
+								<div class="form-group">
+									<input type="text" class="form-control" name="headerSearch" placeholder="Enter your keyword">
+								</div>
+								<button type="submit" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-search"></i></button>
+							</form>
+						</li>
+					</ul><!--end .header-nav-options -->
+					<ul class="header-nav header-nav-profile">
+						<li class="dropdown">
+							<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
+								<img src="../../assets/img/avatar1.jpg?1403934956" alt="" />
+								<span id="labelUsername" class="profile-info"></span>
+							</a>
+							<ul class="dropdown-menu animation-dock">
+								<li><a href="../../html/pages/profile.html">Mi Perfil</a></li>
+								<li class="divider"></li>
+								<li><a href="#" onclick="logoutPila()"><i class="fa fa-fw fa-power-off text-danger"></i> Salir</a></li>
+							</ul><!--end .dropdown-menu -->
+						</li><!--end .dropdown -->
+					</ul><!--end .header-nav-profile -->
+					<ul class="header-nav header-nav-toggle">
+						<li>
+							<a class="btn btn-icon-toggle btn-default" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false">
+								<i class="fa fa-ellipsis-v"></i>
+							</a>
+						</li>
+					</ul><!--end .header-nav-toggle -->
+				</div><!--end #header-navbar-collapse -->
+			</div>
+		</header>
+		<!-- END HEADER-->
+
+		<!-- BEGIN BASE-->
+		<div id="base">
+
+			<!-- BEGIN OFFCANVAS LEFT -->
+			<div class="offcanvas">
+			</div><!--end .offcanvas-->
+			<!-- END OFFCANVAS LEFT -->
+
+			<!-- BEGIN CONTENT-->
+			<div id="content">
+				<section class="style-default-bright">
+					<div class="section-header">
+						<h2 class="text-primary">Pagar aporte al Sistema General de Seguridad Social en Salud, al Sistema General de Pensiones y Sistema General de Riesgos Laborales</h2>
+					</div>
+					<div class="section-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="card">
+									<div class="card-body ">
+										<div id="rootwizard2" class="form-wizard form-wizard-horizontal">
+											<form class="form floating-label form-validation" role="form" novalidate="novalidate">
+												<div class="form-wizard-nav">
+													<div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
+													<ul class="nav nav-justified">
+														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">Pensionado</span></a></li>
+														<li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">Calcular pago</span></a></li>
+														<li><a href="#step3" data-toggle="tab"><span class="step">3</span> <span class="title">Pagar</span></a></li>
+														<li><a href="#step4" data-toggle="tab"><span class="step">4</span> <span class="title">Resumen</span></a></li>
+													</ul>
+												</div><!--end .form-wizard-nav -->
+												<div class="tab-content clearfix">
+													<div class="tab-pane active" id="step1">
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="nombre" id="nombre" class="form-control" data-rule-minlength="2" required readonly>
+																	<label for="nombre" class="control-label">Nombre</label>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="codigoCIU" id="codigoCIU" class="form-control" data-rule-minlength="2" required readonly>
+																	<label for="codigoCIU" class="control-label">Código CIU</label>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="number" name="salario" id="salario" class="form-control" data-rule-minlength="3" required readonly>
+																	<label for="salario" class="control-label">Salario</label>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="tipoPensionado" id="tipoPensionado" class="form-control" required readonly>
+																	<label for="tipoPensionado" class="control-label">Tipo Pensionado</label>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="number" name="edad" id="edad" class="form-control" required="" readonly>
+																	<label for="edad" class="control-label">Edad</label>
+																</div>
+															</div>
+														</div>
+													</div><!--end #step1 -->
+													<div class="tab-pane" id="step2">
+														<br/><br/>
+														<div class="row">
+															<div class="col-sm-12">
+																<div class="form-group">
+																	<h3 id="step2Message"></h3>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="valorSalud" id="valorSalud" class="form-control" value="0" required readonly>
+																	<label for="valorSalud" class="control-label">Valor a pagar al sistema General de Seguridad Social en Salud</label>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<a href="#" class="btn btn-raised btn-default-light ink-reaction" onclick="pagarServicio(2)">Calcular</a>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="valorPension" id="valorPension" class="form-control" value="0" required readonly>
+																	<label for="valorPension" class="control-label">Valor a pagar al sistema General de Pensiones</label>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<a href="#" type="submit" class="btn btn-raised btn-default-light ink-reaction" onclick="pagarServicio(1)">Calcular</a>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="valorRiesgos" id="valorRiesgos" class="form-control" value="0" required readonly>
+																	<label for="valorRiesgos" class="control-label">Valor a pagar al sistema General de Riesgos Laborales</label>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<a href="#" type="submit" class="btn btn-raised btn-default-light ink-reaction" onclick="pagarServicio(3)">Calcular</a>
+																</div>
+															</div>
+														</div>
+													</div><!--end #step2 -->
+													<div class="tab-pane" id="step3">
+														<br/><br/>
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="valorTotal" id="valorTotal" class="form-control" required readonly>
+																	<label for="valorTotal" class="control-label">Valor total a pagar</label>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<select id="franquicia" name="franquicia" class="form-control">
+																		<option value="visa">Visa</option>
+																		<option value="mastercard">Mastercard</option>
+																		<option value="mastercard">Diners</option>
+																	</select>
+																	<label for="franquicia">Franquicia</label>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="tarjetaCredito" id="tarjetaCredito" class="form-control" data-rule-creditcard="" required>
+																	<label for="tarjetaCredito" class="control-label">Número tarjeta de crédito</label>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="tarjetaCreditoVencimiento" id="tarjetaCreditoVencimiento" class="form-control" required>
+																	<label for="tarjetaCreditoVencimiento" class="control-label">Fecha Vencimiento</label>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="number" name="codigoVerificacion" id="codigoVerificacion" class="form-control" data-rule-maxlength="3" required>
+																	<label for="codigoVerificacion" class="control-label">Código Verificacion</label>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="nombreTitular" id="nombreTitular" class="form-control" required>
+																	<label for="nombreTitular" class="control-label">Nombre Titular Tarjeta</label>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="number" name="cedulaTitular" id="cedulaTitular" class="form-control" required>
+																	<label for="cedulaTitular" class="control-label">Cédula Titular</label>
+																</div>
+															</div>
+														</div>
+													</div><!--end #step3 -->
+													<div class="tab-pane" id="step4">
+														<br/><br/>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label id="mensajeResumen" class="control-label">¡¡Pago Exitoso!!</label>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="valorSaludR" id="valorSaludR" class="form-control" required readonly>
+																	<label for="valorSaludR" class="control-label">Valor pagado al sistema General de Seguridad Social en Salud</label>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="valorPensionR" id="valorPensionR" class="form-control" required readonly>
+																	<label for="valorPensionR" class="control-label">Valor pagado al sistema General de Pensiones</label>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="valorRiesgosR" id="valorRiesgosR" class="form-control" required readonly>
+																	<label for="valorRiesgosR" class="control-label">Valor pagado al sistema General de Riesgos Laborales</label>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<input type="text" name="valorTotalR" id="valorTotalR" class="form-control" required readonly>
+																	<label for="valorTotalR" class="control-label">Valor total pagado</label>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<a href="pagar-servicios.html" type="submit" class="btn btn-raised btn-default-light ink-reaction">Finalizar</a>
+																</div>
+															</div>
+														</div>
+
+													</div><!--end #step4 -->
+												</div><!--end .tab-content -->
+												<ul class="pager wizard">
+													<li class="previous"><a class="btn-raised" href="javascript:void(0);">Anterior</a></li>
+													<li class="next"><a class="btn-raised" href="javascript:void(0);" onclick="calcularTotal()">Siguiente</a></li>
+												</ul>
+											</form>
+										</div><!--end #rootwizard -->
+									</div><!--end .card-body -->
+								</div><!--end .card -->
+							</div><!--end .col -->
+						</div><!--end .row -->
+						<!-- END VALIDATION FORM WIZARD -->
+					</div><!--end .section-body -->
+				</section>
+			</div><!--end #content-->
+			<!-- END CONTENT -->
+
+			<!-- BEGIN MENUBAR-->
+			<div id="menubar" class="menubar-inverse ">
+				<div class="menubar-fixed-panel">
+					<div>
+						<a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+							<i class="fa fa-bars"></i>
+						</a>
+					</div>
+					<div class="expanded">
+						<a href="../../html/dashboards/dashboard.html">
+							<span class="text-lg text-bold text-primary ">Planilla Integrada de Liquidación de Aportes (PILA)</span>
+						</a>
+					</div>
+				</div>
+				<div id="menuLateral" class="menubar-scroll-panel">
+					<!-- BEGIN MAIN MENU -->
+					<ul id="main-menu" class="gui-controls">
+
+						<!-- BEGIN INICIO -->
+						<li>
+							<a href="consultar-pensionado.html" >
+								<div class="gui-icon"><i class="md md-home"></i></div>
+								<span class="title">Inicio</span>
+							</a>
+						</li><!--end /menu-li -->
+						<!-- END INICIO -->
+
+						<!-- BEGIN PENSIONADOS -->
+						<li class="gui-folder">
+							<a>
+								<div class="gui-icon"><i class="glyphicon glyphicon-user"></i></div>
+								<span class="title">Pensionados</span>
+							</a>
+							<!--start submenu -->
+							<ul>
+								<li><a href="consultar-pensionado.html" ><span class="title">Consultar</span></a></li>
+								<li><a href="crear-pensionado.html" ><span class="title">Crear</span></a></li>
+							</ul><!--end /submenu -->
+						</li><!--end /menu-li -->
+						<!-- END PENSIONADOS -->
+
+						<!-- BEGIN PENSIONADOS -->
+						<li class="gui-folder">
+							<a>
+								<div class="gui-icon"><i class="glyphicon glyphicon-refresh"></i></div>
+								<span class="title">Novedades</span>
+							</a>
+							<!--start submenu -->
+							<ul>
+								<li><a href="consultar-novedades.html" ><span class="title">Consultar</span></a></li>
+							</ul><!--end /submenu -->
+						</li><!--end /menu-li -->
+						<!-- END PENSIONADOS -->
+
+						<!-- BEGIN SERVICIOS -->
+						<li class="gui-folder">
+							<a>
+								<div class="gui-icon"><i class="glyphicon glyphicon-credit-card"></i></div>
+								<span class="title">Servicios</span>
+							</a>
+							<!--start submenu -->
+							<ul>
+								<li><a href="pagar-servicios.html" ><span class="title">Pagar</span></a></li>
+							</ul><!--end /submenu -->
+						</li><!--end /menu-li -->
+						<!-- END SERVICIOS -->
+
+
+					</ul><!--end .main-menu -->
+					<!-- END MAIN MENU -->
+
+					<div class="menubar-foot-panel">
+						<small class="no-linebreak hidden-folded">
+							<span class="opacity-75">Copyright &copy; 2014</span> <strong>CodeCovers</strong>
+						</small>
+					</div>
+				</div><!--end .menubar-scroll-panel-->
+			</div><!--end #menubar-->
+			<!-- END MENUBAR -->
+
+			<!-- BEGIN OFFCANVAS RIGHT -->
+			<div class="offcanvas">
+
+				<!-- BEGIN OFFCANVAS SEARCH -->
+				<div id="offcanvas-search" class="offcanvas-pane width-8">
+					<div class="offcanvas-head">
+						<header class="text-primary">Search</header>
+						<div class="offcanvas-tools">
+							<a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
+								<i class="md md-close"></i>
+							</a>
+						</div>
+					</div>
+				</div><!--end .offcanvas-pane -->
+				<!-- END OFFCANVAS SEARCH -->
+
+			</div><!--end .offcanvas-->
+			<!-- END OFFCANVAS RIGHT -->
+
+		</div><!--end #base-->
+		<!-- END BASE -->
+
+		<!-- BEGIN JAVASCRIPT -->
+		<script src="../../assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
+		<script src="../../assets/js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
+		<script src="../../assets/js/libs/bootstrap/bootstrap.min.js"></script>
+		<script src="../../assets/js/libs/spin.js/spin.min.js"></script>
+		<script src="../../assets/js/libs/autosize/jquery.autosize.min.js"></script>
+		<script src="../../assets/js/libs/DataTables/jquery.dataTables.min.js"></script>
+		<script src="../../assets/js/libs/DataTables/extensions/ColVis/js/dataTables.colVis.min.js"></script>
+		<script src="../../assets/js/libs/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+		<script src="../../assets/js/libs/nanoscroller/jquery.nanoscroller.min.js"></script>
+		<script src="../../assets/js/core/source/App.js"></script>
+		<script src="../../assets/js/core/source/AppNavigation.js"></script>
+		<script src="../../assets/js/core/source/AppOffcanvas.js"></script>
+		<script src="../../assets/js/core/source/AppCard.js"></script>
+		<script src="../../assets/js/core/source/AppForm.js"></script>
+		<script src="../../assets/js/core/source/AppNavSearch.js"></script>
+		<script src="../../assets/js/core/source/AppVendor.js"></script>
+		<script src="../../assets/js/core/demo/Demo.js"></script>
+		<script src="../../assets/js/core/demo/ServiciosTableDynamic.js"></script>
+		<script src="../../assets/js/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+		<script src="../../assets/js/libs/jquery-validation/dist/additional-methods.min.js"></script>
+		<script src="../../assets/js/libs/wizard/jquery.bootstrap.wizard.min.js"></script>
+		<script src="../../assets/js/core/demo/DemoFormWizard.js"></script>
+
+		<script src="../../assets/js/app/util/config.js"></script>
+		<script src="../../assets/js/app/util/service.js"></script>
+		<script src="../../assets/js/app/util/util.js"></script>
+		<script src="../../assets/js/app/services/index.js"></script>
+		<script src="../../assets/js/app/services/login.js"></script>
+		<script src="../../assets/js/app/services/cargar-pensionado-pago.js"></script>
+		<script src="../../assets/js/app/services/pagarServicio.js"></script>
+		<!-- END JAVASCRIPT -->
+
+	</body>
+</html>
