@@ -28,16 +28,16 @@ function actualizarPensionado() {
     var id = getUrlParameter('id');
     var data = {
         nombre: $('#nombre').val(),
-        edad: $('#edad').val(),
-        salario: $('#salario').val(),
+        edad: parseInt($('#edad').val()),
+        salario: parseFloat($('#salario').val()),
         esAltoRiesgo: ($("input[name='esAltoRiesgo']").groupVal() == 'true'),
         esCongresista: ($("input[name='esCongresista']").groupVal() == 'true'),
         esTrabajadorCTI: ($("input[name='esTrabajadorCTI']").groupVal() == 'true'),
         esAviador: ($("input[name='esAviador']").groupVal() == 'true'),
         residenciaExterior: $('#residenciaExterior').val(),
         tieneGrupoFamiliarColombia: ($("input[name='tieneGrupoFamiliarColombia']").groupVal() == 'true'),
-        codigoCIU: $('#codigoCIU').val(),
-        tipoPensionado: $('#tipoPensionado option:selected').val()
+        codigoCIU: parseInt($('#codigoCIU').val()),
+        tipoPensionado: parseInt($('#tipoPensionado option:selected').val())
     };
 
     PUT('/pensionados/' + id + '/', JSON.stringify(data), function (response) {
