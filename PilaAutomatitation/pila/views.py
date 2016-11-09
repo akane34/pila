@@ -382,6 +382,11 @@ def calcular_pago_servicio(request, id_aportante, id_pensionado, id_servicio):
             elif servicio.pk == 3:
                 valor_a_pagar = servicio.calcular_pago_aporte_riesgos_laborales(pensionado)
 
+        if valor_a_pagar is None:
+            valor_a_pagar = 0
+        elif valor_a_pagar > 0:
+            valor_a_pagar = round(valor_a_pagar, 2)
+
         respuesta = {
             'valor_a_pagar': valor_a_pagar
         }
