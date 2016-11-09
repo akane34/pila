@@ -317,10 +317,10 @@ def actualizar_eliminar_novedad(request, id_aportante, id_pensionado, id):
             novedad = models.Novedad.objects.get(pk=id)
 
             if data['fechaInicio']:
-                novedad.fecha_inicio = data['fechaInicio']
+                novedad.fecha_inicio = datetime.strptime(data['fechaInicio'], "%d/%m/%Y")
 
             if data['fechaFin']:
-                novedad.fecha_fin = data['fechaFin']
+                novedad.fecha_fin = datetime.strptime(data['fechaFin'], "%d/%m/%Y")
 
             if data['duracion']:
                 novedad.duracion = data['duracion']
