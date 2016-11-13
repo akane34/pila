@@ -13,9 +13,10 @@ $(window).load(function () {
         $('input:radio[name="esCongresista"]').filter('[value="' + response.es_congresista + '"]').attr('checked', true);
         $('input:radio[name="esTrabajadorCTI"]').filter('[value="' + response.es_trabajador_CTI + '"]').attr('checked', true);
         $('input:radio[name="esAviador"]').filter('[value="' + response.es_aviador + '"]').attr('checked', true);
-        $('#residenciaExterior').val(response.residencia_exterior);
+        $('input:radio[name="residenciaExterior"]').filter('[value="' + response.residencia_exterior + '"]').attr('checked', true);
         $('input:radio[name="tieneGrupoFamiliarColombia"]').filter('[value="' + response.tiene_grupo_familiar_colombia + '"]').attr('checked', true);
         $('#codigoCIU').val(response.codigo_CIU);
         $('#tipoPensionado > option[value="' + response.tipo_pensionado + '"]').attr('selected', 'selected');
+        $('#tipoPension > option[value="' + response.tipo_pension + '"]').attr('selected', 'selected');
     });
 });

@@ -167,8 +167,16 @@
 								<label for="esAviador">¿Es aviador?</label>
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" id="residenciaExterior" name="residenciaExterior">
-								<label for="residenciaExterior">Dirección de residencia en el exterior</label>
+                                <div class="btn-group" data-toggle="buttons">
+									<br/>
+									<label class="btn ink-reaction btn-primary">
+										<input type="radio" name="residenciaExterior" id="residenciaExterior1" value="true"><i class="fa fa-check-square-o fa-fw"></i> Si
+									</label>
+									<label class="btn ink-reaction btn-primary active">
+										<input type="radio" name="residenciaExterior" id="residenciaExterior2" value="false" checked><i class="fa fa-square-o fa-fw"></i> No
+									</label>
+								</div>
+								<label for="residenciaExterior">¿Residencia en el exterior?</label>
 							</div>
 							<div class="form-group">
 								<div class="btn-group" data-toggle="buttons">
@@ -199,6 +207,29 @@
 									<option value="9">Beneficiario UPC adicional</option>
 								</select>
 								<label for="tipoPensionado">Tipo de pensionado</label>
+							</div>
+                            <div class="form-group">
+								<select id="tipoPension" name="tipoPension" class="form-control">
+									<option value="1">Vejez</option>
+                                    <option value="2">Sobrevivencia vitalicia riesgo común</option>
+                                    <option value="3">Sobrevivencia temporal riesgo común</option>
+                                    <option value="4">Sobrevivencia temporal riesgo común. Cónyuge o compañera(o) menor de 30 años sin hijos</option>
+                                    <option value="5">Sobrevivencia vitalicia por riesgo laboral</option>
+                                    <option value="6">Sobrevivencia temporal riesgo laboral</option>
+                                    <option value="7">Sobrevivencia temporal riesgo laboral. Cónyuge o compañera(o) menor de 30 años sin hijos</option>
+                                    <option value="8">Invalidez riesgo común</option>
+                                    <option value="9">Invalidez riesgo laboral</option>
+                                    <option value="10">Jubilación</option>
+                                    <option value="11">Jubilación para compartir</option>
+                                    <option value="12">Sanción</option>
+                                    <option value="13">Convencional</option>
+                                    <option value="14">Convencional para compartir</option>
+                                    <option value="15">Gracia</option>
+                                    <option value="16">Por convenio internacional</option>
+                                    <option value="20">Sentencia judicial</option>
+                                    <option value="21">Conciliaciones</option>
+								</select>
+								<label for="tipoPension">Tipo pensión</label>
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-raised btn-default-light ink-reaction" onclick="crearPensionado()">Crear</button>

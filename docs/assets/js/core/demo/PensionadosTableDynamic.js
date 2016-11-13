@@ -148,8 +148,8 @@
 				'<td>' + (d.es_aviador === true ? 'SI' : 'NO') + '</td>' +
 				'</tr>' +
 				'<tr>' +
-				'<td>Residencia en el exterior:</td>' +
-				'<td>' + d.residencia_exterior + '</td>' +
+				'<td>¿Residencia en el exterior?:</td>' +
+				'<td>' + (d.residencia_exterior === true ? 'SI' : 'NO') + '</td>' +
 				'</tr>' +
 				'<tr>' +
 				'<td>¿Tiene grupo familiar en Colombia?:</td>' +
@@ -162,6 +162,10 @@
 				'<tr>' +
 				'<td>Tipo de pensionado:</td>' +
 				'<td>' + d.tipo_pensionado_nombre + '</td>' +
+				'</tr>' +
+				'<tr>' +
+				'<td>Tipo pensión:</td>' +
+				'<td>' + d.tipo_pension_nombre + '</td>' +
 				'</tr>' +
 				'<tr>' +
 				'<td>Acciones:</td>' +

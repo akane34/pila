@@ -8,10 +8,11 @@ function crearPensionado() {
         esCongresista: ($("input[name='esCongresista']").groupVal() == 'true'),
         esTrabajadorCTI: ($("input[name='esTrabajadorCTI']").groupVal() == 'true'),
         esAviador: ($("input[name='esAviador']").groupVal() == 'true'),
-        residenciaExterior: $('#residenciaExterior').val(),
+        residenciaExterior: ($("input[name='residenciaExterior']").groupVal() == 'true'),
         tieneGrupoFamiliarColombia: ($("input[name='tieneGrupoFamiliarColombia']").groupVal() == 'true'),
         codigoCIU: $('#codigoCIU').val(),
-        tipoPensionado: $('#tipoPensionado option:selected').val()
+        tipoPensionado: $('#tipoPensionado option:selected').val(),
+        tipoPension: $('#tipoPension option:selected').val()
     };
     
     POST('/pensionados/', JSON.stringify(data), function (response) {
@@ -34,10 +35,11 @@ function actualizarPensionado() {
         esCongresista: ($("input[name='esCongresista']").groupVal() == 'true'),
         esTrabajadorCTI: ($("input[name='esTrabajadorCTI']").groupVal() == 'true'),
         esAviador: ($("input[name='esAviador']").groupVal() == 'true'),
-        residenciaExterior: $('#residenciaExterior').val(),
+        residenciaExterior: ($("input[name='residenciaExterior']").groupVal() == 'true'),
         tieneGrupoFamiliarColombia: ($("input[name='tieneGrupoFamiliarColombia']").groupVal() == 'true'),
         codigoCIU: parseInt($('#codigoCIU').val()),
-        tipoPensionado: parseInt($('#tipoPensionado option:selected').val())
+        tipoPensionado: parseInt($('#tipoPensionado option:selected').val()),
+        tipoPension: $('#tipoPension option:selected').val()
     };
 
     PUT('/pensionados/' + id + '/', JSON.stringify(data), function (response) {
