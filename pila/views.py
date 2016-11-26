@@ -222,23 +222,12 @@ def actualizar_eliminar_pensionado(request, id):
             if data['salario']:
                 pensionado.salario = data['salario']
 
-            if data['esAltoRiesgo']:
-                pensionado.es_alto_riesgo = data['esAltoRiesgo']
-
-            if data['esCongresista']:
-                pensionado.es_congresista = data['esCongresista']
-
-            if data['esTrabajadorCTI']:
-                pensionado.es_trabajador_CTI = data['esTrabajadorCTI']
-
-            if data['esAviador']:
-                pensionado.es_aviador = data['esAviador']
-
-            if data['residenciaExterior']:
-                pensionado.residencia_exterior = data['residenciaExterior']
-
-            if data['tieneGrupoFamiliarColombia']:
-                pensionado.tiene_grupo_familiar_colombia = data['tieneGrupoFamiliarColombia']
+            pensionado.es_alto_riesgo = data['esAltoRiesgo']
+            pensionado.es_congresista = data['esCongresista']
+            pensionado.es_trabajador_CTI = data['esTrabajadorCTI']
+            pensionado.es_aviador = data['esAviador']
+            pensionado.residencia_exterior = data['residenciaExterior']
+            pensionado.tiene_grupo_familiar_colombia = data['tieneGrupoFamiliarColombia']
 
             if data['codigoCIU']:
                 pensionado.codigo_CIU = data['codigoCIU']
