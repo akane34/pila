@@ -169,7 +169,7 @@
 				'</tr>' +
 				'<tr>' +
 				'<td>Acciones:</td>' +
-				'<td><a href="actualizar-pensionado.html?id=' + d.pk + '" style="font-weight: bold; color: #7eb73d;">Actualizar</a>  <a href="#" onclick="eliminarPensionado(' + d.pk + ')" style="font-weight: bold; color: #6c0020;">Eliminar</a></td>' +
+				'<td><a href="actualizar-pensionado.html?id=' + d.pk + '" style="font-weight: bold; color: #7eb73d;">Actualizar</a> - <a href="#" onclick="eliminarPensionado(' + d.pk + ')" style="font-weight: bold; color: #6c0020;">Eliminar</a></td>' +
 				'</tr>' +
 				'</table>';
 	};

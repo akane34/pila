@@ -1,3 +1,27 @@
+$(window).load(function () {
+    var id = getUrlParameter('id');
+
+    GET('/pensionados/' + id + '/', function (response) {
+        $('#nombre').val(response.nombre);
+        $('#usuario').val(response.usuario);
+        $('#tipoPagador > option[value="' + response.tipo_pagador_pensiones + '"]').attr('selected', 'selected');
+
+        $('#nombre').val(response.nombre);
+        $('#edad').val(response.edad);
+        $('#salario').val(response.salario);
+        //$('input:radio[name="esAltoRiesgo"][value="' + response.es_alto_riesgo + '"]').attr('checked', true);
+        $('input:radio[name="esAltoRiesgo"][value="' + response.es_alto_riesgo + '"]').attr('checked', true);
+        $('#esCongresistaSI').prop('checked', true);
+        $('#esTrabajadorCTISI').prop('checked', 'checked');
+        $('input:radio[name="esAviador"]').filter('[value="' + response.es_aviador + '"]').attr('checked', true);
+        $('input:radio[name="residenciaExterior"]').filter('[value="' + response.residencia_exterior + '"]').attr('checked', true);
+        $('input:radio[name="tieneGrupoFamiliarColombia"]').filter('[value="' + response.tiene_grupo_familiar_colombia + '"]').attr('checked', true);
+        $('#codigoCIU > option[value="' + response.codigo_CIU + '"]').attr('selected', 'selected');
+        $('#tipoPensionado > option[value="' + response.tipo_pensionado + '"]').attr('selected', 'selected');
+        $('#tipoPension > option[value="' + response.tipo_pension + '"]').attr('selected', 'selected');
+    });
+});
+
 function crearPensionado() {
     var data = {
         aportante: USER.idAportante,
@@ -10,7 +34,7 @@ function crearPensionado() {
         esAviador: ($("input[name='esAviador']").groupVal() == 'true'),
         residenciaExterior: ($("input[name='residenciaExterior']").groupVal() == 'true'),
         tieneGrupoFamiliarColombia: ($("input[name='tieneGrupoFamiliarColombia']").groupVal() == 'true'),
-        codigoCIU: $('#codigoCIU').val(),
+        codigoCIU: $('#codigoCIU option:selected').val(),
         tipoPensionado: $('#tipoPensionado option:selected').val(),
         tipoPension: $('#tipoPension option:selected').val()
     };
@@ -37,7 +61,7 @@ function actualizarPensionado() {
         esAviador: ($("input[name='esAviador']").groupVal() == 'true'),
         residenciaExterior: ($("input[name='residenciaExterior']").groupVal() == 'true'),
         tieneGrupoFamiliarColombia: ($("input[name='tieneGrupoFamiliarColombia']").groupVal() == 'true'),
-        codigoCIU: parseInt($('#codigoCIU').val()),
+        codigoCIU: parseInt($('#codigoCIU option:selected').val()),
         tipoPensionado: parseInt($('#tipoPensionado option:selected').val()),
         tipoPension: $('#tipoPension option:selected').val()
     };
@@ -63,9 +87,3 @@ function eliminarPensionado(id) {
         location.reload();
     });
 }
-
-jQuery.fn.extend({
-    groupVal: function() {
-        return $(this).filter(':checked').val();
-    }
-});

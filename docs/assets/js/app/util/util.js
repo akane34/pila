@@ -12,3 +12,16 @@ function getUrlParameter(sParam) {
         }
     }
 };
+
+jQuery.fn.extend({
+    groupVal: function() {
+        return $(this).filter(':checked').val();
+    }
+});
+
+var nf = new Intl.NumberFormat('es-CO', {
+  style: 'currency',
+  currency: 'COP',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
