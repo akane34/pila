@@ -4,4 +4,5 @@ PilaAutomatitation/db.sqlite3
 db.sqlite3
 *.pyc
 *.pyc
+pila/migrations
 PilaAutomatitation/pila/urls.pyc
