@@ -191,7 +191,7 @@ def consultar_pensionados(request, id):
                     'es_aviador': pensionado.es_aviador,
                     'residencia_exterior': pensionado.residencia_exterior,
                     'tiene_grupo_familiar_colombia': pensionado.tiene_grupo_familiar_colombia,
-                    'codigo_CIU': pensionado.codigo_CIU,
+                    'codigo_CIU': str(pensionado.codigo_CIU).zfill(4),
                     'tipo_pensionado': pensionado.tipo_pensionado,
                     'tipo_pensionado_nombre': tipo_pensionado.descripcion,
                     'tipo_pension': pensionado.tipo_pension,
@@ -260,7 +260,8 @@ def actualizar_eliminar_pensionado(request, id):
                 n = models.Novedad.objects.get(pk=novedad['pk'])
                 novedad['fecha_inicio'] = str(n.fecha_inicio)
                 novedad['fecha_fin'] = str(n.fecha_fin)
-                novedad['tipo_novedad_nombre'] = n.get_tipo_novedad_display()
+                tipo_novedad = models.TipoNovedad.objects.get(pk=novedad['tipo_novedad'])
+                novedad['tipo_novedad_nombre'] = tipo_novedad.descripcion
 
             novedades = json.loads(json.dumps(list(novedades)))
 
@@ -275,7 +276,7 @@ def actualizar_eliminar_pensionado(request, id):
                 'es_aviador': pensionado.es_aviador,
                 'residencia_exterior': pensionado.residencia_exterior,
                 'tiene_grupo_familiar_colombia': pensionado.tiene_grupo_familiar_colombia,
-                'codigo_CIU': pensionado.codigo_CIU,
+                'codigo_CIU': str(pensionado.codigo_CIU).zfill(4),
                 'tipo_pensionado': pensionado.tipo_pensionado,
                 'tipo_pensionado_nombre': tipo_pensionado.descripcion,
                 'tipo_pension': pensionado.tipo_pension,
