@@ -1,4 +1,7 @@
 $(window).load(function () {
+    loadCredentials();
+    $('#labelUsername').html(USER.fields.username);
+
     var id = getUrlParameter('id');
 
     GET('/aportantes/' + id + '/', function (response) {

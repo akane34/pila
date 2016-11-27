@@ -1,4 +1,6 @@
 $(window).load(function () {
+    loadCredentials();
+    $('#labelUsername').html(USER.fields.username);
     var idPensionado = getUrlParameter('idP');
 
     GET('/pensionados/' + idPensionado + '/', function (response) {

@@ -15,6 +15,8 @@ function loginPila() {
 
             POST('/usuarios/' + USER.pk + '/', undefined, function (response) {
                 if (response){
+                    $('#labelUsername').html(USER.fields.username);
+
                     loadCredentials();
                     if (response.id_operador_servicio){
                         USER.idOperadorServicio = response.id_operador_servicio;
@@ -87,10 +89,10 @@ function loadCredentials() {
 
 function setCredentials(user) {
     USER = user;
-    REMEMBER = $('input[name="remember"]:checked');
+    REMEMBER = $('#remember').is(":checked");
     localStorage.setItem('remember', REMEMBER);
 
-    if (REMEMBER && REMEMBER == 'true'){
+    if (REMEMBER && REMEMBER == true){
         localStorage.setItem('userPayService', JSON.stringify(user));
     }
     else{

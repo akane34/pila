@@ -1,6 +1,13 @@
 $( function() {
-    $( "#fechaInicio" ).datepicker();
-    $( "#fechaFin" ).datepicker();
+    $( "#fechaInicio" ).datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+    $( "#fechaFin" ).datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+
+    loadCredentials();
+    $('#labelUsername').html(USER.fields.username);
 });
 
 $(window).load(function () {
@@ -11,8 +18,11 @@ $(window).load(function () {
         if (!response.message){
             for(var i = 0; i < response.novedades.length; i++) {
                 if (response.novedades[i].pk == idNovedad) {
-                    $('#fechaInicio').val(response.novedades[i].fecha_inicio);
-                    $('#fechaFin').val(response.novedades[i].fecha_fin);
+                    var fechaInicioDate = new Date(Date.parse(response.novedades[i].fecha_inicio.replace(/-/g, '/')));
+                    var fechaFinDate = new Date(Date.parse(response.novedades[i].fecha_fin.replace(/-/g, '/')));
+
+                    $('#fechaInicio').val(fechaInicioDate.getDate() + '/' + (fechaInicioDate.getMonth() + 1) + '/' +  fechaInicioDate.getFullYear());
+                    $('#fechaFin').val(fechaFinDate.getDate() + '/' + (fechaFinDate.getMonth() + 1) + '/' +  fechaFinDate.getFullYear());
                     $('#duracion').val(response.novedades[i].duracion);
                     $('#tipo > option[value="' + response.novedades[i].tipo_novedad + '"]').attr('selected', 'selected');
 
@@ -25,8 +35,8 @@ $(window).load(function () {
 
 function crearNovedad() {
     var idPensionado = getUrlParameter('idP');
-    var fechaInicioDate = new Date($('#fechaInicio').val());
-    var fechaFinDate = new Date($('#fechaFin').val());
+    var fechaInicioDate = new Date(Date.parse($('#fechaInicio').val().replace(/-/g, '/')));
+    var fechaFinDate = new Date(Date.parse($('#fechaFin').val().replace(/-/g, '/')));
 
     var data = {
         fechaInicio: fechaInicioDate.getDate() + '/' + (fechaInicioDate.getMonth() + 1) + '/' +  fechaInicioDate.getFullYear(),
@@ -48,8 +58,8 @@ function crearNovedad() {
 function actualizarNovedad() {
     var idPensionado = getUrlParameter('idP');
     var idNovedad = getUrlParameter('id');
-    var fechaInicioDate = new Date($('#fechaInicio').val());
-    var fechaFinDate = new Date($('#fechaFin').val());
+    var fechaInicioDate = new Date(Date.parse($('#fechaInicio').val().replace(/-/g, '/')));
+    var fechaFinDate = new Date(Date.parse($('#fechaFin').val().replace(/-/g, '/')));
 
     var data = {
         fechaInicio: fechaInicioDate.getDate() + '/' + (fechaInicioDate.getMonth() + 1) + '/' +  fechaInicioDate.getFullYear(),
