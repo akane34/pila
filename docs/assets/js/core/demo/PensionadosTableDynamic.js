@@ -148,8 +148,8 @@
 				'<td>' + (d.es_aviador === true ? 'SI' : 'NO') + '</td>' +
 				'</tr>' +
 				'<tr>' +
-				'<td>Residencia en el exterior:</td>' +
-				'<td>' + d.residencia_exterior + '</td>' +
+				'<td>¿Residencia en el exterior?:</td>' +
+				'<td>' + (d.residencia_exterior === true ? 'SI' : 'NO') + '</td>' +
 				'</tr>' +
 				'<tr>' +
 				'<td>¿Tiene grupo familiar en Colombia?:</td>' +
@@ -164,8 +164,12 @@
 				'<td>' + d.tipo_pensionado_nombre + '</td>' +
 				'</tr>' +
 				'<tr>' +
+				'<td>Tipo pensión:</td>' +
+				'<td>' + d.tipo_pension_nombre + '</td>' +
+				'</tr>' +
+				'<tr>' +
 				'<td>Acciones:</td>' +
-				'<td><a href="actualizar-pensionado.html?id=' + d.pk + '" style="font-weight: bold; color: #7eb73d;">Actualizar</a>  <a href="#" onclick="eliminarPensionado(' + d.pk + ')" style="font-weight: bold; color: #6c0020;">Eliminar</a></td>' +
+				'<td><a href="actualizar-pensionado.html?id=' + d.pk + '" style="font-weight: bold; color: #7eb73d;">Actualizar</a> - <a href="#" onclick="eliminarPensionado(' + d.pk + ')" style="font-weight: bold; color: #6c0020;">Eliminar</a></td>' +
 				'</tr>' +
 				'</table>';
 	};

@@ -66,8 +66,8 @@ def crear_consultar_aportante(request):
                                                                'operador_servicio')
 
             for aportante in aportantes:
-                a = models.Aportante.objects.get(pk=aportante['pk'])
-                aportante['tipo_pagador_pensiones_nombre'] = a.get_tipo_pagador_pensiones_display()
+                tipo_pagador_pensiones = models.TipoPagadorPensiones.objects.get(pk=aportante['tipo_pagador_pensiones'])
+                aportante['tipo_pagador_pensiones_nombre'] = tipo_pagador_pensiones.descripcion
 
             aportantes = json.loads(json.dumps(list(aportantes)))
 
@@ -108,6 +108,7 @@ def actualizar_eliminar_aportante(request, id):
             return JsonResponse({"mensaje": "ok"})
         elif request.method == 'GET':
             aportante = models.Aportante.objects.get(pk=id)
+            tipo_pagador_pensiones = models.TipoPagadorPensiones.objects.get(pk=aportante.tipo_pagador_pensiones)
             respuesta = {
                 'pk': aportante.pk,
                 'usuario_id': aportante.usuario_id.id,
@@ -115,7 +116,7 @@ def actualizar_eliminar_aportante(request, id):
                 'nombre': aportante.nombre,
                 'tipo_pagador_pensiones': aportante.tipo_pagador_pensiones,
                 'operador_servicio': aportante.operador_servicio.id,
-                'tipo_pagador_pensiones_nombre': aportante.get_tipo_pagador_pensiones_display()
+                'tipo_pagador_pensiones_nombre': tipo_pagador_pensiones.descripcion
             }
 
             return JsonResponse(respuesta, safe=False)
@@ -144,6 +145,7 @@ def crear_pensionado(request):
             pensionado.tiene_grupo_familiar_colombia = data['tieneGrupoFamiliarColombia']
             pensionado.codigo_CIU = data['codigoCIU']
             pensionado.tipo_pensionado = data['tipoPensionado']
+            pensionado.tipo_pension = data['tipoPension']
             pensionado.aportante = aportante
             pensionado.save()
 
@@ -166,11 +168,15 @@ def consultar_pensionados(request, id):
                                                                                               'duracion',
                                                                                               'tipo_novedad')
 
+                tipo_pensionado = models.TipoPensionado.objects.get(pk=pensionado.tipo_pensionado)
+                tipo_pension = models.TipoPension.objects.get(pk=pensionado.tipo_pension)
+
                 for novedad in novedades:
                     n = models.Novedad.objects.get(pk=novedad['pk'])
                     novedad['fecha_inicio'] = str(n.fecha_inicio)
                     novedad['fecha_fin'] = str(n.fecha_fin)
-                    novedad['tipo_novedad_nombre'] = n.get_tipo_novedad_display()
+                    tipo_novedad = models.TipoNovedad.objects.get(pk=novedad['tipo_novedad'])
+                    novedad['tipo_novedad_nombre'] = tipo_novedad.descripcion
 
                 novedades = json.loads(json.dumps(list(novedades)))
 
@@ -185,9 +191,11 @@ def consultar_pensionados(request, id):
                     'es_aviador': pensionado.es_aviador,
                     'residencia_exterior': pensionado.residencia_exterior,
                     'tiene_grupo_familiar_colombia': pensionado.tiene_grupo_familiar_colombia,
-                    'codigo_CIU': pensionado.codigo_CIU,
+                    'codigo_CIU': str(pensionado.codigo_CIU).zfill(4),
                     'tipo_pensionado': pensionado.tipo_pensionado,
-                    'tipo_pensionado_nombre': pensionado.get_tipo_pensionado_display(),
+                    'tipo_pensionado_nombre': tipo_pensionado.descripcion,
+                    'tipo_pension': pensionado.tipo_pension,
+                    'tipo_pension_nombre': tipo_pension.descripcion,
                     'novedades': novedades
                 })
 
@@ -214,29 +222,21 @@ def actualizar_eliminar_pensionado(request, id):
             if data['salario']:
                 pensionado.salario = data['salario']
 
-            if data['esAltoRiesgo']:
-                pensionado.es_alto_riesgo = data['esAltoRiesgo']
-
-            if data['esCongresista']:
-                pensionado.es_congresista = data['esCongresista']
-
-            if data['esTrabajadorCTI']:
-                pensionado.es_trabajador_CTI = data['esTrabajadorCTI']
-
-            if data['esAviador']:
-                pensionado.es_aviador = data['esAviador']
-
-            if data['residenciaExterior']:
-                pensionado.residencia_exterior = data['residenciaExterior']
-
-            if data['tieneGrupoFamiliarColombia']:
-                pensionado.tiene_grupo_familiar_colombia = data['tieneGrupoFamiliarColombia']
+            pensionado.es_alto_riesgo = data['esAltoRiesgo']
+            pensionado.es_congresista = data['esCongresista']
+            pensionado.es_trabajador_CTI = data['esTrabajadorCTI']
+            pensionado.es_aviador = data['esAviador']
+            pensionado.residencia_exterior = data['residenciaExterior']
+            pensionado.tiene_grupo_familiar_colombia = data['tieneGrupoFamiliarColombia']
 
             if data['codigoCIU']:
                 pensionado.codigo_CIU = data['codigoCIU']
 
             if data['tipoPensionado']:
                 pensionado.tipo_pensionado = data['tipoPensionado']
+
+            if data['tipoPension']:
+                pensionado.tipo_pension = data['tipoPension']
 
             pensionado.save()
 
@@ -253,11 +253,15 @@ def actualizar_eliminar_pensionado(request, id):
                                                                                           'fecha_fin',
                                                                                           'duracion', 'tipo_novedad')
 
+            tipo_pensionado = models.TipoPensionado.objects.get(pk=pensionado.tipo_pensionado)
+            tipo_pension = models.TipoPension.objects.get(pk=pensionado.tipo_pension)
+
             for novedad in novedades:
                 n = models.Novedad.objects.get(pk=novedad['pk'])
                 novedad['fecha_inicio'] = str(n.fecha_inicio)
                 novedad['fecha_fin'] = str(n.fecha_fin)
-                novedad['tipo_novedad_nombre'] = n.get_tipo_novedad_display()
+                tipo_novedad = models.TipoNovedad.objects.get(pk=novedad['tipo_novedad'])
+                novedad['tipo_novedad_nombre'] = tipo_novedad.descripcion
 
             novedades = json.loads(json.dumps(list(novedades)))
 
@@ -272,9 +276,11 @@ def actualizar_eliminar_pensionado(request, id):
                 'es_aviador': pensionado.es_aviador,
                 'residencia_exterior': pensionado.residencia_exterior,
                 'tiene_grupo_familiar_colombia': pensionado.tiene_grupo_familiar_colombia,
-                'codigo_CIU': pensionado.codigo_CIU,
+                'codigo_CIU': str(pensionado.codigo_CIU).zfill(4),
                 'tipo_pensionado': pensionado.tipo_pensionado,
-                'tipo_pensionado_nombre': pensionado.get_tipo_pensionado_display(),
+                'tipo_pensionado_nombre': tipo_pensionado.descripcion,
+                'tipo_pension': pensionado.tipo_pension,
+                'tipo_pension_nombre': tipo_pension.descripcion,
                 'novedades': novedades
             }
 
@@ -394,4 +400,43 @@ def calcular_pago_servicio(request, id_aportante, id_pensionado, id_servicio):
         return JsonResponse(respuesta, safe=False)
     except:
         traceback.print_exc()
-        return JsonResponse({"mensaje": "Ocurrio un error calculando el pago del servicio"})
+        return JsonResponse({"mensaje": "Ocurrió un error calculando el pago del servicio"})
+
+
+@csrf_exempt
+def registrar_consultar_pago(request, id_aportante, id_pensionado):
+    try:
+        if request.method == 'POST':
+            data = json.loads(request.body)
+
+            aportante = models.Aportante.objects.get(pk=id_aportante)
+            pensionado = models.Pensionado.objects.get(pk=id_pensionado)
+
+            validacion_pago = models.TipoPensionadoTipoPagadorPensiones.objects.filter(
+                tipo_pensionado_id=pensionado.tipo_pensionado,
+                tipo_pagador_pensiones_id=aportante.tipo_pagador_pensiones)
+
+            if validacion_pago is not None and len(validacion_pago) > 0:
+                pago = models.Pago()
+                pago.valor_salud = data['valorSalud']
+                pago.valor_pension = data['valorPension']
+                pago.valor_riesgos = data['valorRiesgos']
+                pago.valor_total = data['valorTotal']
+                pago.aportante = aportante
+                pago.beneficiario = pensionado
+
+                pago.save()
+
+                return HttpResponse(serializers.serialize("json", [pago]))
+            else:
+                return JsonResponse({"mensaje": "Ocurrió un error registrando el pago de los aportes"})
+        elif request.method == 'GET':
+            pagos = models.Pago.objects.filter(beneficiario_id=id_pensionado).values('pk', 'valor_salud',
+                                                                                     'valor_pension', 'valor_riesgos',
+                                                                                     'valor_total', 'beneficiario_id')
+            pagos = json.loads(json.dumps(list(pagos)))
+
+            return JsonResponse(pagos, safe=False)
+    except:
+        traceback.print_exc()
+        return JsonResponse({"mensaje": "Ocurrió un error registrando/consultando el pago de los aportes"})

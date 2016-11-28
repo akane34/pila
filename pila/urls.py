@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^usuarios/(?P<id>\d+)/$', views.consultar_tipo_usuario),
     url(r'^aportantes/(?P<id_aportante>\d+)/pensionados/(?P<id_pensionado>\d+)/servicios/(?P<id_servicio>\d+)/$',
         views.calcular_pago_servicio),
+    url(r'^aportantes/(?P<id_aportante>\d+)/pensionados/(?P<id_pensionado>\d+)/pagos/$',
+        views.registrar_consultar_pago),
 ]

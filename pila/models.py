@@ -11,31 +11,40 @@ class OperadorServicio(models.Model):
     nombre = models.CharField(max_length=250)
 
 
+class TipoPagadorPensiones(models.Model):
+    descripcion = models.CharField(max_length=250)
+
+
 class Aportante(models.Model):
-    TIPO_PAGADOR_PENSIONES = (
-        (1, 'Empleador'),
-        (2, 'Administrador de pensiones'),
-        (3, 'Pagador de pensiones'),
-        (4, 'Pensiones de entidades de los regímenes especiales y de excepción')
-    )
+    TIPO_PAGADOR_PENSIONES = []
     usuario_id = models.OneToOneField(User)
     nombre = models.CharField(max_length=250)
     tipo_pagador_pensiones = models.IntegerField(choices=TIPO_PAGADOR_PENSIONES)
     operador_servicio = models.ForeignKey(OperadorServicio)
 
+    def __init__(self, *args, **kwargs):
+        super(Aportante, self).__init__(*args, **kwargs)
+        opciones = TipoPagadorPensiones.objects.all()
+        for opcion in opciones:
+            self.TIPO_PAGADOR_PENSIONES.append((opcion.pk, opcion.descripcion))
+
+
+class TipoPensionado(models.Model):
+    descripcion = models.CharField(max_length=250)
+
+
+class TipoPension(models.Model):
+    descripcion = models.CharField(max_length=250)
+
+
+class TipoPensionadoTipoPagadorPensiones(models.Model):
+    tipo_pensionado = models.ForeignKey(TipoPensionado)
+    tipo_pagador_pensiones = models.ForeignKey(TipoPagadorPensiones)
+
 
 class Pensionado(models.Model):
-    TIPO_PENSIONADO = (
-        (1, 'Pensionado de régimen de prima media. Tope máximo de pensión 25 smlmv'),
-        (2, 'Pensionado de régimen de prima media. Sin tope máximo de pensión'),
-        (3, 'Pensionado de régimen de ahorro individual. No aplica tope máximo de pensión'),
-        (4, 'Pensionado de Riesgos Laborales. Tope máximo de 25 smlmv'),
-        (5, 'Pensionado por el empleador, con tope máximo de pensión 25 smlmv'),
-        (6, 'Pensionado por el empleador sin tope máximo de pensión'),
-        (7, 'Pensionado de entidades de los regímenes especial y de excepción, con tope máximo de pensión 25 smlmv'),
-        (8, 'Pensionado de entidades de los regímenes especial y de excepción sin tope máximo de pensión'),
-        (9, 'Beneficiario UPC adicional')
-    )
+    TIPO_PENSIONADO = []
+    TIPO_PENSION = []
     nombre = models.CharField(max_length=250)
     edad = models.IntegerField()
     salario = models.FloatField()
@@ -43,32 +52,43 @@ class Pensionado(models.Model):
     es_congresista = models.BooleanField()
     es_trabajador_CTI = models.BooleanField()
     es_aviador = models.BooleanField()
-    residencia_exterior = models.CharField(max_length=250)
+    residencia_exterior = models.BooleanField()
     tiene_grupo_familiar_colombia = models.BooleanField()
     codigo_CIU = models.IntegerField()
     tipo_pensionado = models.IntegerField(choices=TIPO_PENSIONADO)
+    tipo_pension = models.IntegerField(choices=TIPO_PENSION)
     aportante = models.ForeignKey(Aportante)
+
+    def __init__(self, *args, **kwargs):
+        super(Pensionado, self).__init__(*args, **kwargs)
+
+        opciones_tipo_pensionado = TipoPensionado.objects.all()
+        for opcion_tipo_pensionado in opciones_tipo_pensionado:
+            self.TIPO_PENSIONADO.append((opcion_tipo_pensionado.pk, opcion_tipo_pensionado.descripcion))
+
+        opciones_tipo_pension = TipoPension.objects.all()
+        for opcion_tipo_pension in opciones_tipo_pension:
+            self.TIPO_PENSION.append((opcion_tipo_pension.pk, opcion_tipo_pension.descripcion))
+
+
+class TipoNovedad(models.Model):
+    descripcion = models.CharField(max_length=250)
 
 
 class Novedad(models.Model):
-    TIPO_NOVEDAD = (
-        (1, 'Traslado'),
-        (2, 'Variación transitoria de salario'),
-        (3, 'Supención temporal'),
-        (4, 'Licencia no remunerada'),
-        (5, 'Comisión por servicios'),
-        (6, 'Incapacidad temporal por enfermedad'),
-        (7, 'Licencia maternidad/paternidad'),
-        (8, 'Vacaciones'),
-        (9, 'Licencia remunerada'),
-        (10, 'Aporte volunatario a pensiones')
-    )
+    TIPO_NOVEDAD = []
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     duracion = models.IntegerField()
     tipo_novedad = models.IntegerField(choices=TIPO_NOVEDAD)
     aportante = models.ForeignKey(Aportante)
     pensionado = models.ForeignKey(Pensionado)
+
+    def __init__(self, *args, **kwargs):
+        super(Novedad, self).__init__(*args, **kwargs)
+        opciones = TipoNovedad.objects.all()
+        for opcion in opciones:
+            self.TIPO_NOVEDAD.append((opcion.pk, opcion.descripcion))
 
 
 class Servicio(models.Model):
@@ -112,7 +132,7 @@ class Servicio(models.Model):
         if len(novedades) > 0:
             ultima_novedad = novedades.reverse()[0]
 
-        if pensionado.residencia_exterior == 'S' or pensionado.tiene_grupo_familiar_colombia == 'S':
+        if pensionado.residencia_exterior and pensionado.tiene_grupo_familiar_colombia:
             return 0
         elif len(novedades) == 0:
             return pensionado.salario * 0.12

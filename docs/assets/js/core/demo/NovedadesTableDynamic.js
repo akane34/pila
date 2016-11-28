@@ -126,17 +126,20 @@
 
 		if (d.novedades){
 			for(var i = 0; i < d.novedades.length; i++){
+				var fechaInicioDate = new Date(Date.parse(d.novedades[i].fecha_inicio.replace(/-/g, '/')));
+    			var fechaFinDate = new Date(Date.parse(d.novedades[i].fecha_fin.replace(/-/g, '/')));
+
 				novedades += '<tr>' +
 				'<td>Novedad No:</td>' +
 				'<td>' + (i + 1) + '</td>' +
 				'</tr>' +
 				'<tr>' +
 				'<td>Fecha inicio:</td>' +
-				'<td>' + d.novedades[i].fecha_inicio + '</td>' +
+				'<td>' + fechaInicioDate.getDate() + '/' + (fechaInicioDate.getMonth() + 1) + '/' +  fechaInicioDate.getFullYear() + '</td>' +
 				'</tr>' +
 				'<tr>' +
 				'<td>Fecha fin:</td>' +
-				'<td>' + d.novedades[i].fecha_fin + '</td>' +
+				'<td>' + fechaFinDate.getDate() + '/' + (fechaFinDate.getMonth() + 1) + '/' +  fechaFinDate.getFullYear() + '</td>' +
 				'</tr>' +
 				'<tr>' +
 				'<td>Duracion:</td>' +
@@ -148,7 +151,7 @@
 				'</tr>' +
 				'<tr>' +
 				'<td>Acciones:</td>' +
-				'<td><a href="actualizar-novedad.html?idP=' + d.pk + '&id=' + d.novedades[i].pk + '" style="font-weight: bold; color: #7eb73d;">Actualizar</a>  <a href="#" onclick="eliminarNovedad(' + d.pk + ',' + d.novedades[i].pk + ')" style="font-weight: bold; color: #6c0020;">Eliminar</a></td>' +
+				'<td><a href="actualizar-novedad.html?idP=' + d.pk + '&id=' + d.novedades[i].pk + '" style="font-weight: bold; color: #7eb73d;">Actualizar</a> - <a href="#" onclick="eliminarNovedad(' + d.pk + ',' + d.novedades[i].pk + ')" style="font-weight: bold; color: #6c0020;">Eliminar</a></td>' +
 				'</tr>' +
 				'<tr><td>------------------</td></tr>';
 			}
