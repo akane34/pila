@@ -42,9 +42,14 @@ class TipoPensionadoTipoPagadorPensiones(models.Model):
     tipo_pagador_pensiones = models.ForeignKey(TipoPagadorPensiones)
 
 
+class CodigoCIU(models.Model):
+    descripcion = models.IntegerField()
+
+
 class Pensionado(models.Model):
     TIPO_PENSIONADO = []
     TIPO_PENSION = []
+    CODIGO_CIU = []
     nombre = models.CharField(max_length=250)
     edad = models.IntegerField()
     salario = models.FloatField()
@@ -54,7 +59,7 @@ class Pensionado(models.Model):
     es_aviador = models.BooleanField()
     residencia_exterior = models.BooleanField()
     tiene_grupo_familiar_colombia = models.BooleanField()
-    codigo_CIU = models.IntegerField()
+    codigo_CIU = models.IntegerField(choices=CODIGO_CIU)
     tipo_pensionado = models.IntegerField(choices=TIPO_PENSIONADO)
     tipo_pension = models.IntegerField(choices=TIPO_PENSION)
     aportante = models.ForeignKey(Aportante)
@@ -69,6 +74,10 @@ class Pensionado(models.Model):
         opciones_tipo_pension = TipoPension.objects.all()
         for opcion_tipo_pension in opciones_tipo_pension:
             self.TIPO_PENSION.append((opcion_tipo_pension.pk, opcion_tipo_pension.descripcion))
+
+        opciones_codigo_ciu = CodigoCIU.objects.all()
+        for opcion_codigo_ciu in opciones_codigo_ciu:
+            self.CODIGO_CIU.append((opcion_codigo_ciu.pk, opcion_codigo_ciu.descripcion))
 
 
 class TipoNovedad(models.Model):
